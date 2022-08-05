@@ -34,8 +34,8 @@ function Todo (props){
             <button onClick={add}>Add</button>
         </form>
         <ul>
-         {items.map( cada => <li>{cada}</li>)}
-            
+         {items.map( cada => <li key={items.indexOf(cada)}>{cada}</li>)}
+         
         </ul>
         
     </div>)
