@@ -20,8 +20,9 @@ function Todo (props){
         event.preventDefault()
         let path = document.querySelector("#nuss").value
         let novoArray = [...items, path]
+        if(text != ""){
         setItems(novoArray)
-        setText(" ")
+        setText("")}
 
     }
     
@@ -34,13 +35,18 @@ function Todo (props){
             <button onClick={add}>Add</button>
         </form>
         <ul>
-         {items.map( cada => <li key={items.indexOf(cada)}>{cada}</li>)}
-         
+         <List items={items}></List>
         </ul>
-        
+            
     </div>)
 }
 
+
+function List(props){
+
+
+   return ( props.items.map( cada => <li key={props.items.indexOf(cada)}>{cada}</li>))
+}
 
 
 export default Todo
