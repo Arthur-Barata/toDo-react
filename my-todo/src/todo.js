@@ -1,52 +1,57 @@
 import React, {useState, useEffect} from "react"
 import "./todo.css"
+import List from "./List.js"
+import Formulario from "./formulario.js"
+import item from "./item.js"
 
 
 function Todo (props){
+ 
+    const[items,setItems]=useState([ ])
 
-    const[text,setText]=useState(props.valor)
-    const[items,setItems]=useState(["eu"])
-    const nada =""
-
-   function addHanddler(event){
-        let textInput = event.target.value;
-        setText(textInput)
-        console.log(text)
-    }
-
-   
-    function add (event){
-
-        event.preventDefault()
-        let path = document.querySelector("#nuss").value
-        let novoArray = [...items, path]
-        if(text != ""){
+    function buscadora(text){
+        let novoArray = [...items, new item(text)]
         setItems(novoArray)
-        setText("")}
-
     }
     
+     function onItemDeleted(item ){
+
+        let nov = items.filter((it)=> it.id != item.id)
+        setItems(nov)
+     }
+     function checkLink(){
+
+        if(items.done){
+            return  "./check.png"
+        }
+        else{
+            return "./check (1).png"
+        }
+     }
+     function changer(cada){
+        
+            let novo = items.map((item)=>{
+                if (item.id == cada.id){
+                    item.done= !cada.done
+                }
+                return item
+            })
+        
+        
+        setItems(novo) 
+     }
 
     return(
     <div className="container">
         <h1 >ToDo</h1>
-        <form>
-            <input id="nuss" type="text" onChange={addHanddler} value={text}></input>
-            <button onClick={add}>Add</button>
-        </form>
+        <Formulario onAddItem={buscadora}></Formulario>
         <ul>
-         <List items={items}></List>
+         <List changer={changer} checkLink={checkLink} onItemDeleted={onItemDeleted} items={items}></List>
         </ul>
             
     </div>)
 }
 
-
-function List(props){
-
-
-   return ( props.items.map( cada => <li key={props.items.indexOf(cada)}>{cada}</li>))
-}
 
 
 export default Todo

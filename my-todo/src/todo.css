@@ -3,3 +3,12 @@
     max-width:900px;
     
 }
+
+
+img{
+    width:15px;
+    height: 15px;
+}
+.done{
+    text-decoration: line-through;
+}
