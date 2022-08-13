@@ -5,9 +5,27 @@ import Formulario from "./formulario.js"
 import item from "./item.js"
 
 
+const savedIt ="savedItem"
+
 function Todo (props){
  
     const[items,setItems]=useState([ ])
+
+    useEffect(()=>{
+        localStorage.setItem(savedIt,JSON.stringify(items))
+
+    }
+    
+    ,[items])
+
+    useEffect(()=>{
+        let saveus= JSON.parse(localStorage.getItem(savedIt))
+
+        if(saveus){
+        setItems(saveus)
+        }
+    }
+    ,[])
 
     function buscadora(text){
         let novoArray = [...items, new item(text)]
@@ -43,12 +61,16 @@ function Todo (props){
 
     return(
     <div className="container">
-        <h1 >ToDo</h1>
+        <div className="content">
+        <div className="header">
+            <img className='logo' src="./td.png"></img>
+            <h1 >ToDo</h1></div>
+        <h4>Organize seus afazeres</h4>
         <Formulario onAddItem={buscadora}></Formulario>
         <ul>
          <List changer={changer} checkLink={checkLink} onItemDeleted={onItemDeleted} items={items}></List>
         </ul>
-            
+        </div>    
     </div>)
 }
 
